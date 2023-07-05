@@ -1,4 +1,5 @@
 import { test } from "@playwright/test";
+import { QontaxPage } from "./pages/qontax.page";
 
 test.use({
   storageState: "auth.local.json",
@@ -29,25 +30,25 @@ test("create contact by codegen", async ({ page }) => {
 });
 
 test("create contact with a better locators", async ({ page }) => {
-  await page.goto("https://qontax.vercel.app/");
+  const q = new QontaxPage(page);
 
-  await page.getByRole("link", { name: "Add Contact" }).click();
-  await page.getByLabel("Firstname").click();
-  await page.getByLabel("Firstname").fill("John");
-  await page.getByLabel("Lastname").click();
-  await page.getByLabel("Lastname").fill("Doe");
-  await page.getByLabel(/image url/i).click();
-  await page
-    .getByLabel(/image url/i)
-    .fill(
-      "https://github.com/zainfathoni/www.zainfathoni.com/blob/master/static/images/zain.jpg?raw=true",
-    );
+  await q.goto();
 
-  await page.getByLabel(/occupation/i).fill("Senior Software Engineer");
-  await page.getByLabel(/twitter/i).fill("zainfathoni");
-  await page.getByLabel(/bio/i).fill("Family Man");
+  // Click on add contact link
+  await q.addContactLink.click();
 
-  await page.getByRole("button", { name: "Submit" }).click();
+  // Fill in details
+  await q.firstnameInput.fill("John");
+  await q.lastnameInput.fill("Doe");
+  await q.imageUrl.fill(
+    "https://github.com/zainfathoni/www.zainfathoni.com/blob/master/static/images/zain.jpg?raw=true",
+  );
+  await q.occupation.fill("Senior Software Engineer");
+  await q.twitter.fill("zainfathoni");
+  await q.bio.fill("Family Man");
+
+  // Click Submit
+  await q.submitButton.click();
 
   // FIXME: await expect(page.url).not.toMatch(/new$/);
 });
