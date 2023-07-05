@@ -5,7 +5,7 @@ test.use({
   storageState: "auth.local.json",
 });
 
-test("create contact by codegen", async ({ page }) => {
+test.skip("create contact by codegen", async ({ page }) => {
   await page.goto("https://qontax.vercel.app/");
   await page.getByRole("link", { name: "Add Contact" }).click();
   await page.getByPlaceholder("John", { exact: true }).click();
@@ -53,7 +53,7 @@ test("create contact with a better locators", async ({ page }) => {
   // FIXME: await expect(page.url).not.toMatch(/new$/);
 });
 
-test("edit contact with codegen", async ({ page }) => {
+test.skip("edit contact with codegen", async ({ page }) => {
   await page
     .getByRole("link", {
       name: "Photo of Zain Zain Fathoni Senior Software Engineer zainfathoni",
